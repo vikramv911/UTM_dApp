@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+	<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+        <title>Demo - JavaScript A* Search Algorithm</title>
+		<link rel="stylesheet" type="text/css" media="screen, projection" href="../css/demo.css" />
+		<link rel="stylesheet" type="text/css" href="../css/jquery.timepicker.css" />
+		
+		<script type='text/javascript' src='../js/jquery-1.7.1.min.js'></script>
+		<script type='text/javascript' src='../js/astar.js'></script>
+		<!--<script type='text/javascript' src='../dist/astar-concat.js'></script>-->
+		<script type='text/javascript' src='../js/demo.js'></script>
+		<script type='text/javascript' src='../js/jquery.timepicker.min.js'></script>
+		
+    	<script src="../js/web3.min.js"></script>
+    	<script src="../js/truffle-contract.js"></script>
+    	<script src="../js/moment.min.js"></script>
+    	<script type="text/javascript">
+    		var timeleft = 25;
+		    var downloadTimer = setInterval(function(){
+		    timeleft--;
+		    document.getElementById("countdowntimer").textContent = timeleft;
+		    if(timeleft <= 0)
+		        clearInterval(downloadTimer);
+		    },1000);
+		</script>
+
+	</head>
+<body>
+	<div id="header"> 
+        <h1>sUAS Route Planning Simulation</h1>
+        <div class='buttons'>
+       </div>
+        <div class="links">
+        </div>
+	</div>
+
+	<div id="content">
+		<h2>Choose the necessary attributes</h2>
+
+	    <div id="controls" class='clear'>
+
+	    		<label for="selectWallFrequency">Black Hole Frequency (NO GO Areas):</label>
+	    		<select id="selectWallFrequency">
+	    			<option value=".1">10%</option>
+	    			<option value=".2">20%</option>
+	    			<option value=".3">30%</option>
+	    			<option value=".4">40%</option>
+	    		</select>
+	    		<br />
+	    		<label for="selectGridSize">Flight level: </label>
+	    		<select id="selectGridSize" name="selectGridSize">
+	    			<option value="60">FL500</option>
+	    			<!-- <option value="15">FL450</option> -->
+	    			<option value="50">FL400</option>
+	    			<!-- <option value="">FL350</option> -->
+	    			<option value="40" selected="selected">FL300</option>
+	    			<!-- <option value="50">FL250</option> -
+	    			<option value="100">FL200</option>
+	    			<option value="150">FL150</option> -->
+	    		</select>
+
+	    		<br />
+	    		<!-- 
+<label for="checkDebug">Show search info?</label>
+	    		<input type="checkbox" name="checkDebug" id="checkDebug" />
+ -->
+	    		<br />
+	    		<label for="searchDiagonal">Allow diagonal movement?</label>
+	    		<input type="checkbox" name="searchDiagonal" id="searchDiagonal" />
+	    		<br />
+	    		<!-- <label for="checkClosest">Closest node if target unreachable?</label>
+	    		<input type="checkbox" name="checkClosest" id="checkClosest" />
+	    		<br /> -->
+	    		<label for="generateWeights">Add random weights?</label>
+	    		<input type="checkbox" name="generateWeights" id="generateWeights" />
+	    		<br />
+	    		<label for="displayWeights">Display weight values?</label>
+	    		<input type="checkbox" name="displayWeights" id="displayWeights" />
+	    		<br />
+	    		<label for="returnTrip">Return trips only?</label>
+	    		<input type="checkbox" name="returnTrip" id="returnTrip" />
+	    		<br />
+	    		<input type="button" id="btnGenerate" value="Generate Grid" /> 
+	    		<input type="button" id="btnRefresh" value="Refresh Map from blockchain" />
+	    		<input type="button" id="btnComplete" value="Path Completed" />
+	    		<fieldset id='weightsKey'>
+	    			<legend>Key:</legend>
+	    			<div>
+	    			<span class="grid_item weight1" style="width: 14.25px; height: 14.25px; margin-right: 6px;" id="keyWeight3"></span> Weight of 1 </div>
+	    			<div>
+	    			<span class="grid_item weight3" style="width: 14.25px; height: 14.25px; margin-right: 6px;" id="keyWeight3"></span> Weight of 3 </div>
+	    			<div>
+	    			<span class="grid_item weight5" style="width: 14.25px; height: 14.25px; margin-right: 6px;" id="keyWeight3"></span> Weight of 5 </div>
+	    			<div>
+	    			<span class="grid_item wall" style="width: 14.25px; height: 14.25px; margin-right: 6px;" id="keyWall"></span> Wall (imapassable) </div>
+	    		</fieldset>
+				<br />
+					<label for="input_starttime">Select Start Time and click on destination cell to start: </label>
+  					<input id="startTime" name="startTime" type="text" class="time" />
+  					<script>
+						$(function() {
+							$('#startTime').timepicker({ 'scrollDefault': 'now', 
+																	 'step': 10,
+																	 'minTime': '9:00am',
+																	 'maxTime': '6:30pm', 
+																	 'timeFormat': 'H:i'
+																	});
+						});
+					</script>  <br />
+	   
+		<p> Please wait while the blockchain is loading in <span id="countdowntimer"> 30 </span> Seconds</p>
+	    <span id="accountAddress" class="text-center"></span> <br />
+		<span id="message_start">Source - </span> <br />
+		<span id="message_end">Destination - </span> <br />
+		<span id="time">Total Time - </span><br />
+		<span id="end_time"> Flight End Time - </span>
+		
+	    </div>
+
+	    <div id="main">
+	    	<div id="search_grid">Loading FL1...</div>
+	    </div>
+
+	</div>
+	<div id="footer"></div>
+
+	
+</body>
+</html>
